@@ -1,0 +1,4 @@
+﻿*.cs linguist-detectable=true
+*.cshtml linguist-detectable=true
+*.csproj linguist-detectable=true
+mf-dev-backend-2025/* linguist-detectable=true
