@@ -38,5 +38,29 @@ namespace mf_dev_backend_2025.Controllers
 
             return View(veículo);
         }
+
+        // edição
+        public async Task<IActionResult> Edit(int? id) { 
+            if(id == null) return NotFound();
+            var dados = await _context.Veículos.FindAsync(id);
+            if(dados == null) return NotFound();
+            return View(dados); 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, Veículo veículo)
+        {
+            // isso é porque o id do veículo não pode ser alterado
+            if(id != veículo.Id) return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                _context.Veículos.Update(veículo);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
     }
 }
