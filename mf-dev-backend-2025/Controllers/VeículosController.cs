@@ -27,9 +27,9 @@ namespace mf_dev_backend_2025.Controllers
 
         // post de veículos
         [HttpPost]
-        public async Task <IActionResult> Create(Veículo veículo)
+        public async Task<IActionResult> Create(Veículo veículo)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 _context.Veículos.Add(veículo);
                 await _context.SaveChangesAsync();
@@ -40,18 +40,19 @@ namespace mf_dev_backend_2025.Controllers
         }
 
         // edição
-        public async Task<IActionResult> Edit(int? id) { 
-            if(id == null) return NotFound();
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
             var dados = await _context.Veículos.FindAsync(id);
-            if(dados == null) return NotFound();
-            return View(dados); 
+            if (dados == null) return NotFound();
+            return View(dados);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, Veículo veículo)
         {
             // isso é porque o id do veículo não pode ser alterado
-            if(id != veículo.Id) return NotFound();
+            if (id != veículo.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -65,10 +66,30 @@ namespace mf_dev_backend_2025.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
-            if(id == null) return NotFound(); 
+            if (id == null) return NotFound();
             var dados = await _context.Veículos.FindAsync(id);
             if (dados == null) return NotFound();
             return View(dados);
+        }
+
+        // pra fazer o delete, antes tem que recuperar os dados que é igual o details
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+            var dados = await _context.Veículos.FindAsync(id);
+            if (dados == null) return NotFound();
+            return View(dados);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            if (id == null) return NotFound();
+            var dados = await _context.Veículos.FindAsync(id);
+            if (dados == null) return NotFound();
+            _context.Veículos.Remove(dados);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }
