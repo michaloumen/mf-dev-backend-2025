@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using mf_dev_backend_2025.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace mf_dev_backend_2025.Controllers
 {
+    [Authorize(Roles = "Admin")]
+    // somente admin consegue ver essa parte
     public class UsuariosController : Controller
     {
         private readonly AppDbContext _context;
@@ -26,12 +29,20 @@ namespace mf_dev_backend_2025.Controllers
               return View(await _context.Usuarios.ToListAsync());
         }
 
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous] //pra conseguir acessar sem estar autenticado. Se não, não consigo fazer login
         public async Task<ActionResult> Login(Usuario usuario)
         {
             var dados = await _context.Usuarios.FindAsync(usuario.Id);
@@ -74,6 +85,7 @@ namespace mf_dev_backend_2025.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
