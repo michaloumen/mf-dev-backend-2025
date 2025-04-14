@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Valor" class="control-label"></label>
-                <input asp-for="Valor" class="form-control" />
+                <input value="@Model.Valor" id="Valor" name="Valor" required  data-val-required="O campo Tipo de Combustível é obrigatório" class="form-control" />
                 <span asp-validation-for="Valor" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -36,6 +36,7 @@
             <div class="form-group">
                 <label asp-for="Tipo" class="control-label"></label>
                 <select asp-for="Tipo" class="form-control" asp-items="Html.GetEnumSelectList<TipoCombustivel>()"></select>
+                <span asp-validation-for="Tipo" class="text-danger"></span>
                 <span asp-validation-for="Tipo" class="text-danger"></span>
             </div>
             <div class="form-group">
