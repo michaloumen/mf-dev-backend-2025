@@ -31,8 +31,9 @@ namespace mf_dev_backend_2025.Models
         [Required(ErrorMessage = "Obrigatório informar o veículo")]
         public int VeiculoId { get; set; }
 
-        [ForeignKey("VeículoId")]
-        public int Veiculo { get; set; }
+        [ForeignKey("VeiculoId")]
+        public Veículo Veiculo { get; set; }
+
     }
 
     public enum TipoCombustivel
